@@ -2,7 +2,7 @@
 
 # VAGRANT CLOUD
 
-https://app.vagrantup.com/mcandre/boxes/vagrant-freebsd-cpp
+https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp
 
 # EXAMPLE
 
