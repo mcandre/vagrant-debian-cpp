@@ -20,5 +20,5 @@ Hello World!
 # EXPORT
 
 ```console
-$ vagrant package --output vagrant-debian-cpp.box
+$ vagrant destroy -f; vagrant up && vagrant package --output vagrant-debian-cpp.box
 ```
