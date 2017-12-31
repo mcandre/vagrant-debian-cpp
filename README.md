@@ -12,13 +12,21 @@ $ vagrant ssh -c "cd /vagrant && clang++ -o hello hello.cpp && ./hello"
 Hello World!
 ```
 
-# REQUIREMENTS
+# RUNTIME REQUIREMENTS
 
 * [Vagrant](https://www.vagrantup.com)
-* A VM provider, such as [VirtualBox](https://www.virtualbox.org), [VMware](https://www.vmware.com), or [libvirt](https://libvirt.org)
+* A supported hypervisor provider in {[VirtualBox](https://www.virtualbox.org), [VMWare](https://www.vmware.com/), [libvirt](https://libvirt.org/)}, along with any relevant Vagrant plugins.
+
+# BUILDTIME REQUIREMENTS
+
+* [Vagrant](https://www.vagrantup.com)
+* A supported hypervisor provider in {[VirtualBox](https://www.virtualbox.org), [VMWare](https://www.vmware.com/), [libvirt](https://libvirt.org/)}, along with any relevant Vagrant plugins.
+* [make](https://www.gnu.org/software/make/)
 
 # EXPORT
 
 ```console
-$ vagrant destroy -f; vagrant up && vagrant package --output vagrant-debian-cpp.box
+$ make vagrant-debian-cpp.box
 ```
+
+Unfortunately, VMware-provided Vagrant boxes do not support straightforward packaging for reuse as new Vagrant base boxes, so VirtualBox-provided boxes are preferred here.
