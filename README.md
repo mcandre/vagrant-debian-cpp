@@ -15,12 +15,12 @@ Hello World!
 # RUNTIME REQUIREMENTS
 
 * [Vagrant](https://www.vagrantup.com)
-* A supported hypervisor provider in {[VirtualBox](https://www.virtualbox.org), [VMWare](https://www.vmware.com/), [libvirt](https://libvirt.org/)}, along with any relevant Vagrant plugins.
+* The [VirtualBox](https://www.virtualbox.org) hypervisor provider
 
 # BUILDTIME REQUIREMENTS
 
 * [Vagrant](https://www.vagrantup.com)
-* A supported hypervisor provider in {[VirtualBox](https://www.virtualbox.org), [VMWare](https://www.vmware.com/), [libvirt](https://libvirt.org/)}, along with any relevant Vagrant plugins.
+* The [VirtualBox](https://www.virtualbox.org) hypervisor provider
 * [make](https://www.gnu.org/software/make/)
 
 # EXPORT
@@ -28,5 +28,3 @@ Hello World!
 ```console
 $ make vagrant-debian-cpp.box
 ```
-
-Unfortunately, VMware-provided Vagrant boxes do not support straightforward packaging for reuse as new Vagrant base boxes, so VirtualBox-provided boxes are preferred here.
