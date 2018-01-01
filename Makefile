@@ -19,5 +19,5 @@ clean-vagrant-metadata:
 
 clean: clean-boxes clean-vm clean-vagrant-metadata
 
-$(BOX): export.Vagrantfile clean launch-vm
-	vagrant package --output $(BOX) --vagrantfile export.Vagrantfile
+$(BOX): clean launch-vm
+	vagrant package --output $(BOX)
