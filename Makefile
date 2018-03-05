@@ -5,9 +5,6 @@ BOX=vagrant-debian-cpp.box
 launch-vm: Vagrantfile bootstrap.sh
 	vagrant up
 
-test: launch-vm
-	vagrant ssh -c "cd /vagrant && clang++ -o hello hello.cpp && ./hello"
-
 clean-vm:
 	-vagrant destroy -f
 
@@ -19,5 +16,8 @@ clean-vagrant-metadata:
 
 clean: clean-boxes clean-vm clean-vagrant-metadata
 
-$(BOX): clean launch-vm
-	vagrant package --output $(BOX)
+$(BOX): clean-boxes clean-vm launch-vm export.Vagrantfile
+	vagrant package --output $(BOX) --vagrantfile export.Vagrantfile
+
+install-box-virtualbox: $(BOX)
+	vagrant box add --force --name mcandre/vagrant-debian-cpp $(BOX)

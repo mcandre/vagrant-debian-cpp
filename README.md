@@ -7,6 +7,7 @@ https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp
 # EXAMPLE
 
 ```console
+$ cd test
 $ vagrant up
 $ vagrant ssh -c "cd /vagrant && clang++ -o hello hello.cpp && ./hello"
 Hello World!
