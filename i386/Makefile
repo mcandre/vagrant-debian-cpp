@@ -1,5 +1,5 @@
 BOX_NAMESPACE=mcandre
-BOX_BASENAME=vagrant-debian-cpp-amd64
+BOX_BASENAME=vagrant-debian-cpp-i386
 BOX=$(BOX_BASENAME).box
 
 .PHONY: launch-vm clean-vm clean-boxes clean-vagrant-metadata
