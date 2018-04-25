@@ -2,7 +2,8 @@
 
 # VAGRANT CLOUD
 
-https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp
+* https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp-amd64
+* https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp-i386
 
 # EXAMPLE
 
