@@ -27,11 +27,21 @@ Hello World!
 
 * [Vagrant](https://www.vagrantup.com)
 * The [VirtualBox](https://www.virtualbox.org) hypervisor provider
-* [make](https://www.gnu.org/software/make/)
 
-# EXPORT
+# BUILD AND TEST BOXES
 
 ```console
-$ sh -c "cd amd64 && make vagrant-debian-cpp-amd64.box"
-$ sh -c "cd i386 && make vagrant-debian-cpp-i386.box"
+$ rake boxes import test
+```
+
+# PUBLISH
+
+```console
+$ rake publish
+```
+
+# CLEAN
+
+```console
+$ rake clean
 ```
