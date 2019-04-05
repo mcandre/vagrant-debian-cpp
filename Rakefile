@@ -1,13 +1,16 @@
 VERSION = '0.0.1'
 PROVIDER = 'virtualbox'
-ARCHITECTURES = ['amd64', 'i386']
+ARCHITECTURES = ['amd64', 'i386', 'ppc64el']
 BOX_NAMESPACE = 'mcandre'
 BOX_BASENAME_AMD64 = 'vagrant-debian-cpp-amd64'
 BOX_AMD64 = "#{BOX_BASENAME_AMD64}.box"
 BOX_BASENAME_I386 = 'vagrant-debian-cpp-i386'
 BOX_I386 = "#{BOX_BASENAME_I386}.box"
+BOX_BASENAME_PPC64EL = 'vagrant-debian-cpp-ppc64el'
+BOX_PPC64EL = "#{BOX_BASENAME_PPC64EL}.box"
 SHORT_DESCRIPTION_AMD64 = 'a Vagrant box for building C/C++ binaries for GNU/Linux (Debian) x86_64'
 SHORT_DESCRIPTION_I386 = 'a Vagrant box for building C/C++ binaries for GNU/Linux (Debian) x86'
+SHORT_DESCRIPTION_PPC64EL = 'a Vagrant box for building C/C++ binaries for GNU/Linux (Debian) ppc64el'
 VERSION_DESCRIPTION = 'Source: https://github.com/mcandre/vagrant-debian-cpp'
 
 task :default => 'test'
@@ -36,7 +39,19 @@ task :box_i386 => [
         :chdir => 'i386'
 end
 
-task :boxes => [:box_amd64, :box_i386] do
+task :box_ppc64el => [
+    "ppc64el#{File::SEPARATOR}Vagrantfile",
+    "ppc64el#{File::SEPARATOR}bootstrap.sh",
+    "ppc64el#{File::SEPARATOR}export.Vagrantfile",
+    :clean_box_ppc64el
+] do
+    sh 'vagrant up --provider libvirt',
+        :chdir => 'ppc64el'
+    sh "vagrant package --output #{BOX_PPC64EL} --vagrantfile export.Vagrantfile",
+        :chdir => 'ppc64el'
+end
+
+task :boxes => [:box_amd64, :box_i386, :box_ppc64el] do
 end
 
 task :import_amd64 => [] do
@@ -49,7 +64,12 @@ task :import_i386 => [] do
         :chdir => 'i386'
 end
 
-task :import => [:import_amd64, :import_i386] do
+task :import_ppc64el => [] do
+    sh "vagrant box add --force --name #{BOX_NAMESPACE}/#{BOX_BASENAME_PPC64EL} #{BOX_PPC64EL}",
+        :chdir => 'ppc64el'
+end
+
+task :import => [:import_amd64, :import_i386, :import_ppc64el] do
 end
 
 task :test_amd64 => [
@@ -72,7 +92,17 @@ task :test_i386 => [
         :chdir => "i386#{File::SEPARATOR}test"
 end
 
-task :test => [:test_amd64, :test_i386] do
+task :test_ppc64el => [
+    "ppc64el#{File::SEPARATOR}test#{File::SEPARATOR}Vagrantfile",
+    "ppc64el#{File::SEPARATOR}test#{File::SEPARATOR}hello.cpp"
+] do
+    sh 'vagrant up --provider libvirt',
+        :chdir => "ppc64el#{File::SEPARATOR}test"
+    sh 'vagrant ssh -c "cd /vagrant && clang++ -o hello hello.cpp && ./hello"',
+        :chdir => "ppc64el#{File::SEPARATOR}test"
+end
+
+task :test => [:test_amd64, :test_i386, :test_ppc64el] do
 end
 
 task :publish_amd64 => [] do
@@ -85,7 +115,12 @@ task :publish_i386 => [] do
         :chdir => 'i386'
 end
 
-task :publish => [:publish_amd64, :publish_i386] do
+task :publish_ppc64el => [] do
+    sh "vagrant cloud publish #{BOX_NAMESPACE}/#{BOX_BASENAME_PPC64EL} --force --release --short-description \"#{SHORT_DESCRIPTION_PPC64EL}\" --version-description \"#{VERSION_DESCRIPTION}\" #{VERSION} #{PROVIDER} #{BOX_PPC64EL}",
+        :chdir => 'ppc64el'
+end
+
+task :publish => [:publish_amd64, :publish_i386, :publish_ppc64el] do
 end
 
 task :clean_box_amd64 => [] do
@@ -106,6 +141,11 @@ task :clean_amd64 => [:clean_box_amd64] do
 
     begin
         Dir.glob("amd64#{File::SEPARATOR}**#{File::SEPARATOR}.vagrant").each { |path| FileUtils.rm_r path }
+    rescue
+    end
+
+    begin
+        FileUtils.rm_r "amd64#{File::SEPARATOR}_tmp_package"
     rescue
     end
 end
@@ -130,7 +170,39 @@ task :clean_i386 => [:clean_box_i386] do
         Dir.glob("i386#{File::SEPARATOR}**#{File::SEPARATOR}.vagrant").each { |path| FileUtils.rm_r path }
     rescue
     end
+
+    begin
+        FileUtils.rm_r "i386#{File::SEPARATOR}_tmp_package"
+    rescue
+    end
 end
 
-task :clean => [:clean_amd64, :clean_i386] do
+task :clean_box_ppc64el => [] do
+    Dir.glob("ppc64el#{File::SEPARATOR}*.box").each { |path| File.delete path }
+end
+
+task :clean_ppc64el => [:clean_box_ppc64el] do
+    begin
+        sh 'vagrant destroy -f', :chdir => 'ppc64el'
+    rescue
+    end
+
+    begin
+        sh 'vagrant destroy -f',
+            :chdir => "ppc64el#{File::SEPARATOR}test"
+    rescue
+    end
+
+    begin
+        Dir.glob("ppc64el#{File::SEPARATOR}**#{File::SEPARATOR}.vagrant").each { |path| FileUtils.rm_r path }
+    rescue
+    end
+
+    begin
+        FileUtils.rm_r "ppc64el#{File::SEPARATOR}_tmp_package"
+    rescue
+    end
+end
+
+task :clean => [:clean_amd64, :clean_i386, :clean_ppc64el] do
 end
