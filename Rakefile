@@ -25,6 +25,8 @@ task :box_amd64 => [
         :chdir => 'amd64'
     sh "vagrant package --output #{BOX_AMD64} --vagrantfile export.Vagrantfile",
         :chdir => 'amd64'
+    sh "chown $SUDO_USER: #{BOX_AMD64}",
+        :chdir => 'amd64'
 end
 
 task :box_i386 => [
@@ -37,6 +39,8 @@ task :box_i386 => [
         :chdir => 'i386'
     sh "vagrant package --output #{BOX_I386} --vagrantfile export.Vagrantfile",
         :chdir => 'i386'
+    sh "chown $SUDO_USER: #{BOX_I386}",
+        :chdir => 'i386'
 end
 
 task :box_ppc64el => [
@@ -47,7 +51,10 @@ task :box_ppc64el => [
 ] do
     sh 'vagrant up --provider libvirt',
         :chdir => 'ppc64el'
+    sh 'chmod -R a+r /var/lib/libvirt/images'
     sh "vagrant package --output #{BOX_PPC64EL} --vagrantfile export.Vagrantfile",
+        :chdir => 'ppc64el'
+    sh "chown $SUDO_USER: #{BOX_PPC64EL}",
         :chdir => 'ppc64el'
 end
 

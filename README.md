@@ -28,6 +28,7 @@ Hello World!
 * [OpenBIOS](https://www.openfirmware.info/OpenBIOS)
 * [openhackware](https://github.com/qemu/openhackware)
 * [qemu-skiboot](https://github.com/qemu/skiboot)
+* [libguestfs-tools](http://libguestfs.org/)
 * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
 * [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 * [Ruby](https://www.ruby-lang.org/en/) (for rake)
@@ -35,17 +36,19 @@ Hello World!
 # BUILD AND TEST BOXES
 
 ```console
-$ rake boxes import test
+$ sudo rake boxes import test
 ```
+
+Unfortunately, sudo permissions are required for building boxes in order to resolve a discrepancy with how vagrant-libvirt interacts with libvirt.
 
 # PUBLISH
 
 ```console
-$ rake publish
+$ sudo rake publish
 ```
 
 # CLEAN
 
 ```console
-$ rake clean
+$ sudo rake clean
 ```
