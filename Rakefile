@@ -52,7 +52,6 @@ task :box_ppc64el => [
     sh 'vagrant up --provider libvirt',
         :chdir => 'ppc64el'
     sh 'chmod -R a+r /var/lib/libvirt/images'
-    ENV['VAGRANT_LIBVIRT_VIRT_SYSPREP_OPERATIONS'] = 'defaults,-ssh-userdir,-ssh-hostkeys,-lvm-uuids'
     sh "vagrant package --output #{BOX_PPC64EL} --vagrantfile export.Vagrantfile",
         :chdir => 'ppc64el'
     sh "chown $SUDO_USER: #{BOX_PPC64EL}",
