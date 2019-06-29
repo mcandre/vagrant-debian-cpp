@@ -5,4 +5,5 @@ sudo apt-get update &&
     sudo apt-get clean -y &&
     sudo rm -rf /var/lib/apt/lists/* \
         /var/cache/apt/pkgcache.bin \
-        /var/cache/apt/srcpkgcache.bin
+        /var/cache/apt/srcpkgcache.bin &&
+    sudo sync
