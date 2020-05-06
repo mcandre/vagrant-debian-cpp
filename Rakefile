@@ -17,7 +17,7 @@ task :default => 'test'
 
 task :box_amd64 => [
     "amd64#{File::SEPARATOR}Vagrantfile",
-    "amd64#{File::SEPARATOR}bootstrap.sh",
+    "amd64#{File::SEPARATOR}bootstrap",
     "amd64#{File::SEPARATOR}export.Vagrantfile",
     :clean_box_amd64
 ] do
@@ -31,7 +31,7 @@ end
 
 task :box_i386 => [
     "i386#{File::SEPARATOR}Vagrantfile",
-    "i386#{File::SEPARATOR}bootstrap.sh",
+    "i386#{File::SEPARATOR}bootstrap",
     "i386#{File::SEPARATOR}export.Vagrantfile",
     :clean_box_i386
 ] do
@@ -45,7 +45,7 @@ end
 
 task :box_ppc64el => [
     "ppc64el#{File::SEPARATOR}Vagrantfile",
-    "ppc64el#{File::SEPARATOR}bootstrap.sh",
+    "ppc64el#{File::SEPARATOR}bootstrap",
     "ppc64el#{File::SEPARATOR}export.Vagrantfile",
     :clean_box_ppc64el
 ] do
