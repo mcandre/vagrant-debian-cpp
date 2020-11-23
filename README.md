@@ -1,5 +1,9 @@
 # vagrant-debian-cpp: a Vagrant box for building C/C++ binaries for GNU/Linux (Debian)
 
+# DEPRECATED
+
+See https://github.com/mcandre/mucus
+
 # VAGRANT CLOUD
 
 * https://app.vagrantup.com/mcandre/boxes/vagrant-debian-cpp-amd64
